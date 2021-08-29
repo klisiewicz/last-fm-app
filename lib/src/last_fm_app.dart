@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:last_fm_app/src/track/view/tracks_page.dart';
 
 class LastFMApp extends StatelessWidget {
   const LastFMApp({Key? key}) : super(key: key);
@@ -12,11 +13,7 @@ class LastFMApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const Scaffold(
-          body: Center(
-            child: Text('LastFM app'),
-          ),
-        ),
+        home: const TracksPage(),
       ),
     );
   }

@@ -32,7 +32,10 @@ extension on TrackQuery {
 
 extension on Response {
   List<Track> getTracks() {
-    final tracks = data?['results']['trackmatches']['track'] as List<dynamic>?;
+    print(this);
+    final results = data?['results'] as Map<String, dynamic>?;
+    if (results?.isEmpty ?? true) return [];
+    final tracks = results!['trackmatches']['track'] as List<dynamic>?;
     return tracks?.map(
           (dynamic json) {
             return Track(

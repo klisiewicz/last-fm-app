@@ -11,7 +11,8 @@ class LastFMApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          accentColor: const Color(0xFFB90404),
+          primaryColor: const Color(0xFF140404),
         ),
         home: const TracksPage(),
       ),

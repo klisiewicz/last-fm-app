@@ -26,13 +26,13 @@ extension on TrackQuery {
     return {
       'method': 'track.search',
       'track': value,
+      'limit': '$limit',
     };
   }
 }
 
 extension on Response {
   List<Track> getTracks() {
-    print(this);
     final results = data?['results'] as Map<String, dynamic>?;
     if (results?.isEmpty ?? true) return [];
     final tracks = results!['trackmatches']['track'] as List<dynamic>?;

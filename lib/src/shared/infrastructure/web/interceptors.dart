@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:meta/meta.dart';
 
+@immutable
 class FormatRequestInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -8,6 +10,7 @@ class FormatRequestInterceptor extends Interceptor {
   }
 }
 
+@immutable
 class ApiKeyInterceptor extends Interceptor {
   final String _apiKey;
 

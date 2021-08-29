@@ -1,0 +1,70 @@
+{
+  "results": {
+    "opensearch:Query": {
+      "#text": "",
+      "role": "request",
+      "startPage": "1"
+    },
+    "opensearch:totalResults": "732849",
+    "opensearch:startIndex": "0",
+    "opensearch:itemsPerPage": "30",
+    "trackmatches": {
+      "track": [
+        {
+          "name": "Believer",
+          "artist": "Imagine Dragons",
+          "url": "https://www.last.fm/music/Imagine+Dragons/_/Believer",
+          "streamable": "FIXME",
+          "listeners": "491053",
+          "image": [
+            {
+              "#text": "https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png",
+              "size": "small"
+            },
+            {
+              "#text": "https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png",
+              "size": "medium"
+            },
+            {
+              "#text": "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png",
+              "size": "large"
+            },
+            {
+              "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png",
+              "size": "extralarge"
+            }
+          ],
+          "mbid": ""
+        },
+        {
+          "name": "Believe",
+          "artist": "Cher",
+          "url": "https://www.last.fm/music/Cher/_/Believe",
+          "streamable": "FIXME",
+          "listeners": "582577",
+          "image": [
+            {
+              "#text": "https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png",
+              "size": "small"
+            },
+            {
+              "#text": "https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png",
+              "size": "medium"
+            },
+            {
+              "#text": "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png",
+              "size": "large"
+            },
+            {
+              "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png",
+              "size": "extralarge"
+            }
+          ],
+          "mbid": "32ca187e-ee25-4f18-b7d0-3b6713f24635"
+        }
+      ]
+    },
+    "@attr": {
+    }
+  }
+}

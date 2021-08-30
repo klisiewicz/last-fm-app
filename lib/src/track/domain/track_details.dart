@@ -12,6 +12,7 @@ class TrackDetails with EquatableMixin {
   final Duration duration;
   final Album album;
   final List<String> tags;
+  final String summary;
 
   TrackDetails({
     required String id,
@@ -21,6 +22,7 @@ class TrackDetails with EquatableMixin {
     required String albumTitle,
     required String albumCover,
     List<String> tags = const [],
+    required this.summary,
   })  : id = TrackId(id),
         duration = Duration(seconds: durationInSeconds),
         album = Album(artist: artist, title: albumTitle, imageUrl: albumCover),

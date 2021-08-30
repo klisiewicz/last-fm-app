@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:last_fm_app/src/shared/domain/image.dart' as img;
 import 'package:last_fm_app/src/shared/view/context_ext.dart';
@@ -9,7 +10,7 @@ import 'package:last_fm_app/src/track/domain/track_details.dart';
 import 'package:last_fm_app/src/track/provider/track_provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class TrackDetailsPage extends StatelessWidget {
+class TrackDetailsPage extends ConsumerWidget {
   final String trackId;
 
   const TrackDetailsPage({
@@ -18,46 +19,23 @@ class TrackDetailsPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Positioned(
-              left: 4,
-              top: 4,
-              child: BackButton(
-                onPressed: context.router.pop,
-              ),
-            ),
-            _TrackDetailsReactiveView(trackId: trackId),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _TrackDetailsReactiveView extends ConsumerWidget {
-  final String trackId;
-
-  const _TrackDetailsReactiveView({
-    required this.trackId,
-    Key? key,
-  }) : super(key: key);
-
-  @override
   Widget build(BuildContext context, ScopedReader watch) {
     final trackAsync = watch(trackProvider(trackId));
-    return trackAsync.when(
-      data: (TrackDetails? track) {
-        return track != null
-            ? _TrackDetailsView(track)
-            : _TrackNotFoundView(trackId: trackId);
-      },
-      loading: () => const LoadingIndicator(),
-      error: (error, stackTrace) => ErrorView(error),
+
+    return Scaffold(
+      appBar: trackAsync.maybeWhen(
+        error: (error, stackTrace) => AppBar(),
+        orElse: () => null,
+      ),
+      body: trackAsync.when(
+        data: (TrackDetails? track) {
+          return track != null
+              ? _TrackDetailsView(track)
+              : _TrackNotFoundView(trackId: trackId);
+        },
+        loading: () => const Center(child: LoadingIndicator()),
+        error: (error, stackTrace) => ErrorView(error),
+      ),
     );
   }
 }
@@ -72,18 +50,40 @@ class _TrackDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: [
-          _AlbumImageView(track.album.image),
-          const SizedBox(height: 20),
-          Text(track.album.artist, style: context.textTheme.headline4),
-          Text(track.name, style: context.textTheme.headline5),
-          const SizedBox(height: 20),
-          _TagsView(track.tags),
-        ],
-      ),
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          floating: true,
+          expandedHeight: 400.0,
+          flexibleSpace: FlexibleSpaceBar(
+            background: _AlbumImageView(track.album.image),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.all(20),
+          sliver: SliverList(
+            delegate: SliverChildListDelegate.fixed([
+              Text(
+                track.album.artist,
+                style: context.textTheme.headline4,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                track.name,
+                style: context.textTheme.headline5,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              _TagsView(track.tags),
+              const SizedBox(height: 20),
+              Html(
+                  data: track.summary,
+                  onLinkTap: (String? url, RenderContext context,
+                      Map<String, String> attributes, _) {}),
+            ]),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -98,12 +98,10 @@ class _AlbumImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: FadeInImage.memoryNetwork(
-        placeholder: kTransparentImage,
-        image: image.url,
-      ),
+    return FadeInImage.memoryNetwork(
+      placeholder: kTransparentImage,
+      image: image.url,
+      fit: BoxFit.cover,
     );
   }
 }

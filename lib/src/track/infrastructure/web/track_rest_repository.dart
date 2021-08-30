@@ -86,6 +86,7 @@ extension on Response {
       tags: (track['toptags']['tag'] as List)
           .map((dynamic tag) => tag['name'] as String)
           .toList(),
+      summary: track['wiki'] != null ? track['wiki']['summary'] as String : '',
     );
   }
 }

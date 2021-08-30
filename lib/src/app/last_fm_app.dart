@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:last_fm_app/src/track/view/tracks_page.dart';
+import 'package:last_fm_app/src/app/app_router.dart';
 
 class LastFMApp extends StatelessWidget {
-  const LastFMApp({Key? key}) : super(key: key);
+  final _appRouter = AppRouter();
+
+  LastFMApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const accentColor = Color(0xFFB90404);
     return ProviderScope(
-      child: MaterialApp(
+      child: MaterialApp.router(
         title: 'LastFM',
         theme: ThemeData(
           accentColor: accentColor,
@@ -19,7 +21,8 @@ class LastFMApp extends StatelessWidget {
             cursorColor: accentColor,
           ),
         ),
-        home: const TracksPage(),
+        routerDelegate: _appRouter.delegate(),
+        routeInformationParser: _appRouter.defaultRouteParser(),
       ),
     );
   }

@@ -71,9 +71,9 @@ TypeMatcher<Map<String, String>> _withTrackName(String trackName) {
 extension on Track {
   void shouldBeImagineDragonsBeliever() {
     shouldBeEqualTo(
+      id: '2afe5070-b737-4b24-85d2-ea4cafbfbbaa',
       name: 'Believer',
       artist: 'Imagine Dragons',
-      listeners: 491053,
       imageUrl:
           'https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png',
     );
@@ -81,23 +81,23 @@ extension on Track {
 
   void shouldBeCherBelieve() {
     shouldBeEqualTo(
+      id: '32ca187e-ee25-4f18-b7d0-3b6713f24635',
       name: 'Believe',
       artist: 'Cher',
-      listeners: 582577,
       imageUrl:
           'https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png',
     );
   }
 
   void shouldBeEqualTo({
+    required String id,
     required String name,
     required String artist,
-    required int listeners,
     required String imageUrl,
   }) {
+    expect(id, equals(TrackId(id)));
     expect(name, equals(name));
     expect(artist, equals(artist));
-    expect(numberOfListeners, equals(listeners));
     expect(image.url, equals(imageUrl));
   }
 }

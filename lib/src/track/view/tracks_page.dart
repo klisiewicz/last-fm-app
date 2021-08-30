@@ -1,7 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:last_fm_app/src/app/app_router.dart';
 import 'package:last_fm_app/src/shared/view/context_ext.dart';
 import 'package:last_fm_app/src/shared/view/error_view.dart';
+import 'package:last_fm_app/src/shared/view/loading_indicator.dart';
 import 'package:last_fm_app/src/track/domain/track.dart';
 import 'package:last_fm_app/src/track/provider/track_provider.dart';
 import 'package:last_fm_app/src/track/view/tracks_search_bar.dart';
@@ -27,9 +30,12 @@ class _TracksReactiveView extends ConsumerWidget {
     final tracksAsync = watch(tracksProvider);
     return Center(
       child: tracksAsync.when(
-        data: (List<Track> tracks) =>
-            tracks.isNotEmpty ? _TracksList(tracks) : const _TracksEmpty(),
-        loading: () => const CircularProgressIndicator.adaptive(),
+        data: (List<Track> tracks) {
+          return tracks.isNotEmpty ? _TracksList(tracks) : const _TracksEmpty();
+        },
+        loading: () {
+          return const LoadingIndicator();
+        },
         error: (error, stackTrace) => ErrorView(error),
       ),
     );
@@ -51,7 +57,11 @@ class _TracksList extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return _TrackListItem(
           tracks[index],
-          onTrackSelected: (Track track) {},
+          onTrackSelected: (Track track) {
+            context.router.push(
+              TrackDetailsRoute(trackId: '${track.id}'),
+            );
+          },
         );
       },
       separatorBuilder: (BuildContext context, int index) {

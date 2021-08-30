@@ -17,20 +17,21 @@ class TrackId with EquatableMixin {
 
 @immutable
 class Track with EquatableMixin {
+  final TrackId id;
   final String name;
   final String artist;
-  final int numberOfListeners;
   final Image image;
 
   Track({
+    required String id,
     required this.name,
     required this.artist,
-    required this.numberOfListeners,
     required String imageUrl,
-  }) : image = Image.url(imageUrl);
+  })  : id = TrackId(id),
+        image = Image.url(imageUrl);
 
   @override
-  List<Object?> get props => [name, artist];
+  List<Object?> get props => [id];
 
   @override
   String toString() => '$artist - $name';

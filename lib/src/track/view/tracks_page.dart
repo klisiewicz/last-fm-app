@@ -4,6 +4,7 @@ import 'package:last_fm_app/src/shared/view/context_ext.dart';
 import 'package:last_fm_app/src/shared/view/error_view.dart';
 import 'package:last_fm_app/src/track/domain/track.dart';
 import 'package:last_fm_app/src/track/provider/track_provider.dart';
+import 'package:last_fm_app/src/track/view/track_search_bar.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class TracksPage extends StatelessWidget {
@@ -11,11 +12,9 @@ class TracksPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('LastFM'),
-      ),
-      body: const _TracksReactiveView(),
+    return const Scaffold(
+      appBar: TrackSearchBar(),
+      body: _TracksReactiveView(),
     );
   }
 }
@@ -25,7 +24,7 @@ class _TracksReactiveView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final tracksAsync = watch(tracksProvider(''));
+    final tracksAsync = watch(tracksProvider('Battlefield'));
     return Center(
       child: tracksAsync.when(
         data: (List<Track> tracks) =>

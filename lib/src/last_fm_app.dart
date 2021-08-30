@@ -8,10 +8,9 @@ class LastFMApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const accentColor = Color(0xFFB90404);
-
     return ProviderScope(
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'LastFM',
         theme: ThemeData(
           accentColor: accentColor,
           brightness: Brightness.dark,

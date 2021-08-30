@@ -4,7 +4,7 @@ import 'package:last_fm_app/src/shared/view/context_ext.dart';
 import 'package:last_fm_app/src/shared/view/error_view.dart';
 import 'package:last_fm_app/src/track/domain/track.dart';
 import 'package:last_fm_app/src/track/provider/track_provider.dart';
-import 'package:last_fm_app/src/track/view/track_search_bar.dart';
+import 'package:last_fm_app/src/track/view/tracks_search_bar.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class TracksPage extends StatelessWidget {
@@ -13,7 +13,7 @@ class TracksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: TrackSearchBar(),
+      appBar: TracksSearchBar(),
       body: _TracksReactiveView(),
     );
   }
@@ -24,7 +24,7 @@ class _TracksReactiveView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final tracksAsync = watch(tracksProvider('Battlefield'));
+    final tracksAsync = watch(tracksProvider);
     return Center(
       child: tracksAsync.when(
         data: (List<Track> tracks) =>
@@ -56,12 +56,21 @@ class _TracksList extends StatelessWidget {
       },
       separatorBuilder: (BuildContext context, int index) {
         return tracks.isNotLast(index)
-            ? const Padding(
-                padding: EdgeInsets.only(left: 80),
-                child: Divider(height: 1),
-              )
+            ? const _TrackDivider()
             : const SizedBox();
       },
+    );
+  }
+}
+
+class _TrackDivider extends StatelessWidget {
+  const _TrackDivider({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.only(left: 80),
+      child: Divider(height: 1),
     );
   }
 }

@@ -15,3 +15,8 @@ API_KEY=Your API key
 ```sh
 flutter pub run build_runner build
 ```
+
+4. Run the generator with the following command:
+```sh
+flutter pub run build_runner build
+```

@@ -13,14 +13,14 @@ final trackRepositoryProvider = Provider<TrackRepository>((
 });
 
 final trackQueryProvider =
-    StateProvider.autoDispose<String>((ProviderReference ref) => '');
+    StateProvider.autoDispose<String>((AutoDisposeProviderReference ref) => '');
 
 final tracksProvider = FutureProvider.autoDispose<List<Track>>((
   AutoDisposeProviderReference ref,
 ) async {
-  final trackQueryNotifier = ref.watch(trackQueryProvider);
+  final query = ref.watch(trackQueryProvider).state;
   final repository = ref.watch(trackRepositoryProvider);
-  return repository.getByQuery(TrackQuery(trackQueryNotifier.state));
+  return repository.getByQuery(TrackQuery(query));
 });
 
 final trackProvider = FutureProvider.autoDispose.family<TrackDetails?, String>(

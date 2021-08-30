@@ -58,9 +58,7 @@ class _TracksList extends StatelessWidget {
         return _TrackListItem(
           tracks[index],
           onTrackSelected: (Track track) {
-            context.router.push(
-              TrackDetailsRoute(trackId: '${track.id}'),
-            );
+            context.router.push(TrackDetailsRoute(trackId: '${track.id}'));
           },
         );
       },
@@ -90,24 +88,32 @@ class _TracksEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final query = context.read(trackQueryProvider).state;
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'No tracks found',
+            query.isNotEmpty
+                ? 'No tracks found'
+                : 'Explore the LastFM\'s music',
             style: context.textTheme.headline5,
           ),
           const SizedBox(height: 20),
           Icon(
-            Icons.my_library_music_outlined,
+            query.isNotEmpty
+                ? Icons.my_library_music_outlined
+                : Icons.my_library_music_sharp,
             size: 64,
             color: context.theme.accentColor,
           ),
           const SizedBox(height: 20),
           Text(
-            'Try using a different search query',
+            query.isNotEmpty
+                ? 'Try using a different query'
+                : 'Just enter a track\'s name',
             style: context.textTheme.bodyText2,
           ),
         ],

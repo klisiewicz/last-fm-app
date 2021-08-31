@@ -26,6 +26,5 @@ final tracksProvider = FutureProvider.autoDispose<List<Track>>((
 final trackProvider = FutureProvider.autoDispose.family<TrackDetails?, String>(
     (AutoDisposeProviderReference ref, String id) async {
   final repository = ref.watch(trackRepositoryProvider);
-  final trackId = TrackId(id);
-  return repository.getById(trackId);
+  return repository.getById(TrackId(id));
 });

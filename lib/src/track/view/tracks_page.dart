@@ -140,19 +140,17 @@ class _TrackListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return ListTile(
+      leading: FadeInImage.memoryNetwork(
+        placeholder: kTransparentImage,
+        image: track.image.url,
+        width: 48,
+      ),
+      title: Text(track.name),
+      subtitle: Text(track.artist.toUpperCase()),
       onTap: () {
         onTrackSelected?.call(track);
       },
-      child: ListTile(
-        leading: FadeInImage.memoryNetwork(
-          placeholder: kTransparentImage,
-          image: track.image.url,
-          width: 48,
-        ),
-        title: Text(track.name),
-        subtitle: Text(track.artist.toUpperCase()),
-      ),
     );
   }
 }

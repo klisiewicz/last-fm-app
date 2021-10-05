@@ -10,16 +10,18 @@ class LastFMApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const accentColor = Color(0xFFB90404);
+    final theme = ThemeData(
+      brightness: Brightness.dark,
+      primaryColor: const Color(0xFF140404),
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: accentColor,
+      ),
+    );
     return ProviderScope(
       child: MaterialApp.router(
         title: 'LastFM',
-        theme: ThemeData(
-          accentColor: accentColor,
-          brightness: Brightness.dark,
-          primaryColor: const Color(0xFF140404),
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: accentColor,
-          ),
+        theme: theme.copyWith(
+          colorScheme: theme.colorScheme.copyWith(secondary: accentColor),
         ),
         routerDelegate: _appRouter.delegate(),
         routeInformationParser: _appRouter.defaultRouteParser(),

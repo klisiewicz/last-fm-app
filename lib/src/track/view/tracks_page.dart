@@ -58,6 +58,7 @@ class _TracksList extends StatelessWidget {
         return _TrackListItem(
           tracks[index],
           onTrackSelected: (Track track) {
+            context.hideKeyboard();
             context.router.push(TrackDetailsRoute(trackId: '${track.id}'));
           },
         );
@@ -107,7 +108,7 @@ class _TracksEmpty extends StatelessWidget {
                 ? Icons.my_library_music_outlined
                 : Icons.my_library_music_sharp,
             size: 64,
-            color: context.theme.accentColor,
+            color: context.theme.colorScheme.secondary,
           ),
           const SizedBox(height: 20),
           Text(

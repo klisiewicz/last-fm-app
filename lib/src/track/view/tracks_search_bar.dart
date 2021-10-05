@@ -29,7 +29,7 @@ class TracksSearchBar extends HookWidget implements PreferredSizeWidget {
             hintText: 'Search for tracks...',
             suffixIcon: Icon(
               Icons.search,
-              color: context.theme.accentColor,
+              color: context.theme.colorScheme.secondary,
             ),
             fillColor: context.theme.canvasColor,
             filled: true,
@@ -48,23 +48,26 @@ TextEditingController _useTextEditingControllerWithDebounce(
   BuildContext context,
 ) {
   final textEditingController = useTextEditingController(text: '');
-  useEffect(() {
-    Timer? timer;
-    void listener() {
-      timer?.cancel();
-      timer = Timer(const Duration(milliseconds: 250), () {
-        final newQuery = textEditingController.text.trim();
-        final trackQueryNotifier = context.read(trackQueryProvider);
-        trackQueryNotifier.updateWhenChanged(newQuery);
-      });
-    }
+  useEffect(
+    () {
+      Timer? timer;
+      void listener() {
+        timer?.cancel();
+        timer = Timer(const Duration(milliseconds: 250), () {
+          final newQuery = textEditingController.text.trim();
+          final trackQueryNotifier = context.read(trackQueryProvider);
+          trackQueryNotifier.updateWhenChanged(newQuery);
+        });
+      }
 
-    textEditingController.addListener(listener);
-    return () {
-      timer?.cancel();
-      textEditingController.removeListener(listener);
-    };
-  }, [textEditingController]);
+      textEditingController.addListener(listener);
+      return () {
+        timer?.cancel();
+        textEditingController.removeListener(listener);
+      };
+    },
+    [textEditingController],
+  );
   return textEditingController;
 }
 

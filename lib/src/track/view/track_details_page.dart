@@ -77,9 +77,14 @@ class _TrackDetailsView extends StatelessWidget {
               _TagsView(track.tags),
               const SizedBox(height: 20),
               Html(
-                  data: track.summary,
-                  onLinkTap: (String? url, RenderContext context,
-                      Map<String, String> attributes, _) {}),
+                data: track.summary,
+                onLinkTap: (
+                  String? url,
+                  RenderContext context,
+                  Map<String, String> attributes,
+                  _,
+                ) {},
+              ),
             ]),
           ),
         ),

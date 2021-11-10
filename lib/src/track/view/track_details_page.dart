@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:last_fm_app/src/shared/domain/image.dart' as img;
+import 'package:last_fm_app/src/shared/provider/url_launcher_provider.dart';
 import 'package:last_fm_app/src/shared/view/context_ext.dart';
 import 'package:last_fm_app/src/shared/view/error_view.dart';
 import 'package:last_fm_app/src/shared/view/loading_indicator.dart';
@@ -39,7 +40,7 @@ class TrackDetailsPage extends ConsumerWidget {
   }
 }
 
-class _TrackDetailsView extends StatelessWidget {
+class _TrackDetailsView extends ConsumerWidget {
   final TrackDetails track;
 
   const _TrackDetailsView(
@@ -48,7 +49,7 @@ class _TrackDetailsView extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -77,18 +78,18 @@ class _TrackDetailsView extends StatelessWidget {
               const SizedBox(height: 20),
               Html(
                 data: track.summary,
-                onLinkTap: (
-                  String? url,
-                  RenderContext context,
-                  Map<String, String> attributes,
-                  _,
-                ) {},
+                onLinkTap: (url, context, att, _) => _openUrl(ref, url),
               ),
             ]),
           ),
         ),
       ],
     );
+  }
+
+  void _openUrl(WidgetRef ref, String? url) {
+    if (url == null) return;
+    ref.read(urlLauncherProvider(url)).call();
   }
 }
 

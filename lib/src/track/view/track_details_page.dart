@@ -19,9 +19,8 @@ class TrackDetailsPage extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final trackAsync = watch(trackProvider(trackId));
-
+  Widget build(BuildContext context, WidgetRef ref) {
+    final trackAsync = ref.watch(trackProvider(trackId));
     return Scaffold(
       appBar: trackAsync.maybeWhen(
         error: (error, stackTrace) => AppBar(),

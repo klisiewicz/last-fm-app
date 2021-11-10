@@ -26,16 +26,14 @@ class _TracksReactiveView extends ConsumerWidget {
   const _TracksReactiveView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final tracksAsync = watch(tracksProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tracksAsync = ref.watch(tracksProvider);
     return Center(
       child: tracksAsync.when(
         data: (List<Track> tracks) {
           return tracks.isNotEmpty ? _TracksList(tracks) : const _TracksEmpty();
         },
-        loading: () {
-          return const LoadingIndicator();
-        },
+        loading: () => const LoadingIndicator(),
         error: (error, stackTrace) => ErrorView(error),
       ),
     );
@@ -84,13 +82,12 @@ class _TrackDivider extends StatelessWidget {
   }
 }
 
-class _TracksEmpty extends StatelessWidget {
+class _TracksEmpty extends ConsumerWidget {
   const _TracksEmpty({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final query = context.read(trackQueryProvider).state;
-
+  Widget build(BuildContext context, WidgetRef ref) {
+    final query = ref.read(trackQueryProvider);
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(

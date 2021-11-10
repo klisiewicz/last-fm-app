@@ -6,25 +6,23 @@ import 'package:last_fm_app/src/track/domain/track_query.dart';
 import 'package:last_fm_app/src/track/domain/track_repository.dart';
 import 'package:last_fm_app/src/track/infrastructure/web/track_rest_repository.dart';
 
-final trackRepositoryProvider = Provider<TrackRepository>((
-  ProviderReference ref,
-) {
+final trackRepositoryProvider = Provider<TrackRepository>((Ref ref) {
   return TrackRestRepository(ref.watch(clientProvider));
 });
 
 final trackQueryProvider =
-    StateProvider.autoDispose<String>((AutoDisposeProviderReference ref) => '');
+    StateProvider.autoDispose<String>((AutoDisposeRef ref) => '');
 
 final tracksProvider = FutureProvider.autoDispose<List<Track>>((
-  AutoDisposeProviderReference ref,
+  AutoDisposeRef ref,
 ) async {
-  final query = ref.watch(trackQueryProvider).state;
+  final query = ref.watch(trackQueryProvider);
   final repository = ref.watch(trackRepositoryProvider);
   return repository.getByQuery(TrackQuery(query));
 });
 
-final trackProvider = FutureProvider.autoDispose.family<TrackDetails?, String>(
-    (AutoDisposeProviderReference ref, String id) async {
+final trackProvider = FutureProvider.autoDispose
+    .family<TrackDetails?, String>((AutoDisposeRef ref, String id) async {
   final repository = ref.watch(trackRepositoryProvider);
   return repository.getById(TrackId(id));
 });

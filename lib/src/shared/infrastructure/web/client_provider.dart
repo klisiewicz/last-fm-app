@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:last_fm_app/src/config/provider/config_provider.dart';
 import 'package:last_fm_app/src/shared/infrastructure/web/interceptors.dart';
 
-final clientProvider = Provider<Dio>((ProviderReference ref) {
+final clientProvider = Provider<Dio>((Ref ref) {
   final apiKey = ref.watch(apiKeyProvider);
   final dio = Dio(
     BaseOptions(

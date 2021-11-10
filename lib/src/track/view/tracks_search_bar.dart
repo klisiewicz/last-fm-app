@@ -7,15 +7,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:last_fm_app/src/shared/view/context_ext.dart';
 import 'package:last_fm_app/src/track/provider/track_provider.dart';
 
-class TracksSearchBar extends HookWidget implements PreferredSizeWidget {
+class TracksSearchBar extends HookConsumerWidget
+    implements PreferredSizeWidget {
   const TracksSearchBar({Key? key}) : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
-  Widget build(BuildContext context) {
-    final textController = _useTextEditingControllerWithDebounce(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final textController = _useTextEditingControllerWithDebounce(ref);
     return AppBar(
       title: SizedBox(
         height: kToolbarHeight - 12,
@@ -45,7 +46,7 @@ class TracksSearchBar extends HookWidget implements PreferredSizeWidget {
 }
 
 TextEditingController _useTextEditingControllerWithDebounce(
-  BuildContext context,
+  WidgetRef ref,
 ) {
   final textEditingController = useTextEditingController(text: '');
   useEffect(
@@ -55,7 +56,7 @@ TextEditingController _useTextEditingControllerWithDebounce(
         timer?.cancel();
         timer = Timer(const Duration(milliseconds: 250), () {
           final newQuery = textEditingController.text.trim();
-          final trackQueryNotifier = context.read(trackQueryProvider);
+          final trackQueryNotifier = ref.read(trackQueryProvider.notifier);
           trackQueryNotifier.updateWhenChanged(newQuery);
         });
       }
